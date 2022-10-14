@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:movie_app_bloc/services/cubit/movie_cubit.dart';
 import 'package:movie_app_bloc/view/home_page.dart';
 
+import 'constants/app_text.dart';
 import 'constants/app_theme.dart';
 
 void main() {
@@ -18,7 +19,7 @@ class MyApp extends StatelessWidget {
       create: (context) => MovieCubit(),
       child: MaterialApp(
           debugShowCheckedModeBanner: false,
-          title: 'MovieApp',
+          title: AppText.appName,
           theme: AppTheme().lightTheme,
           home: const HomePage()),
     );
