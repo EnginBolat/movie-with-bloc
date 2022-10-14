@@ -63,7 +63,7 @@ class MoviesHomePage extends StatelessWidget {
             style: Theme.of(context).textTheme.headline4,
           ),
           SizedBox(
-            height: MediaQuery.of(context).size.height * 0.4,
+            height: MediaQuery.of(context).size.height * 0.5,
             width: double.infinity,
             child: ListView.builder(
                 scrollDirection: Axis.horizontal,
@@ -126,7 +126,7 @@ class MoviesHomePage extends StatelessWidget {
             style: Theme.of(context).textTheme.headline4,
           ),
           SizedBox(
-            height: MediaQuery.of(context).size.height * 0.4,
+            height: MediaQuery.of(context).size.height * 0.5,
             width: double.infinity,
             child: ListView.builder(
                 scrollDirection: Axis.horizontal,
