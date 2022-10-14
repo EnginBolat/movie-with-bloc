@@ -1,11 +1,7 @@
-import 'dart:io';
-
 import 'package:bloc/bloc.dart';
-import 'package:dio/dio.dart';
 import 'package:meta/meta.dart';
-import 'package:movie_app_bloc/model/trending_movies_model.dart';
+import 'package:movie_app_bloc/model/movie_model.dart';
 
-import '../../constants/app_api.dart';
 import '../json_services/json_services.dart';
 
 part 'movie_state.dart';
@@ -50,6 +46,19 @@ class MovieCubit extends Cubit<MovieState> {
       emit(GetTrendingMovieState(popularMoviesModelList));
     } catch (e) {
       return null;
+    }
+    return null;
+  }
+
+  Future<Map<String, dynamic>?> getMovieDetails(String movieId) async {
+    try {
+      emit(MovieLoading());
+      Map<String, dynamic>? popularMoviesModelList =
+          await JsonServices().fetchMovieDetails(movieId);
+      Future.delayed(const Duration(seconds: 3));
+      emit(GetMovieDataState(popularMoviesModelList));
+    } catch (e) {
+      print(e);
     }
     return null;
   }

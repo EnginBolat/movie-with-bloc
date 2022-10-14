@@ -25,3 +25,8 @@ class GetPopularMovieState extends MovieState {
   final List<Results>? popularMovieCubitList;
   GetPopularMovieState(this.popularMovieCubitList);
 }
+
+class GetMovieDataState extends MovieState{
+  final Map<String,dynamic>? movieDetailsModel;
+  GetMovieDataState(this.movieDetailsModel);
+}
