@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:movie_app_bloc/services/cubit/movie_cubit.dart';
-import 'package:movie_app_bloc/view/home_page.dart';
+import 'package:movie_app_bloc/view/bottom_navbar_page.dart';
 
 import 'constants/app_text.dart';
 import 'constants/app_theme.dart';
@@ -18,10 +18,11 @@ class MyApp extends StatelessWidget {
     return BlocProvider(
       create: (context) => MovieCubit(),
       child: MaterialApp(
-          debugShowCheckedModeBanner: false,
-          title: AppText.appName,
-          theme: AppTheme().lightTheme,
-          home: const HomePage()),
+        debugShowCheckedModeBanner: false,
+        title: AppText.appName,
+        theme: AppTheme().lightTheme,
+        home: const BottomNavBarPage(),
+      ),
     );
   }
 }
