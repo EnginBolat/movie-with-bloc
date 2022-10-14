@@ -2,6 +2,7 @@ import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
 import 'package:movie_app_bloc/model/movie_model.dart';
 
+import '../../model/tvseries_model.dart';
 import '../json_services/json_services.dart';
 
 part 'movie_state.dart';
@@ -46,6 +47,19 @@ class MovieCubit extends Cubit<MovieState> {
       emit(GetTrendingMovieState(popularMoviesModelList));
     } catch (e) {
       return null;
+    }
+    return null;
+  }
+
+  Future<List<TvSeriesResult>?> getUpcomingMovies() async {
+    try {
+      emit(MovieLoading());
+      List<TvSeriesResult>? upcomingMovieList =
+          await JsonServices().fetchUpcomingMovies();
+      Future.delayed(const Duration(seconds: 3));
+      emit(UpcomingMovieState(upcomingMovieList));
+    } catch (e) {
+      print(e);
     }
     return null;
   }

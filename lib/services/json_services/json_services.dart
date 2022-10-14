@@ -7,6 +7,8 @@ import 'package:movie_app_bloc/constants/app_api.dart';
 import 'package:movie_app_bloc/model/movie_model.dart';
 import 'package:http/http.dart' as http;
 
+import '../../model/tvseries_model.dart';
+
 class JsonServices {
   Future<List<Results>?> fetchTrendingMovies() async {
     try {
@@ -39,16 +41,32 @@ class JsonServices {
     return null;
   }
 
-  Future<Map<String,dynamic>?> fetchMovieDetails(String movieId) async {
+  Future<Map<String, dynamic>?> fetchMovieDetails(String movieId) async {
     try {
       var uriLink = Uri.parse(
           "https://api.themoviedb.org/3/movie/$movieId?api_key=d2ff724b7d35aa2d69624813cb137d8b&language=en-US");
       final response = await http.get(uriLink);
 
       if (response.statusCode == HttpStatus.ok) {
-        var data = response.body;
-        Map<String, dynamic> a = Map<String, dynamic>.from(json.decode(response.body));
+        Map<String, dynamic> a =
+            Map<String, dynamic>.from(json.decode(response.body));
         return a;
+      }
+      return null;
+    } on DioError catch (e) {
+      _ShowDebug.showDioError(e);
+    }
+    return null;
+  }
+
+  Future<List<TvSeriesResult>?> fetchUpcomingMovies() async {
+    try {
+      var response = await Dio().get(ApiConst.upcomingMovies);
+      if (response.statusCode == HttpStatus.ok) {
+        var data = response.data["results"];
+
+        print(data.map((e) => TvSeriesResult.fromJson(e)).toList());
+        return data.map((e) => TvSeriesResult.fromJson(e)).toList();
       }
       return null;
     } on DioError catch (e) {
