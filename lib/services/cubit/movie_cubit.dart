@@ -13,9 +13,19 @@ part 'movie_state.dart';
 class MovieCubit extends Cubit<MovieState> {
   MovieCubit() : super(MovieInitial());
 
-  void startAll() {
-    getTrendingMoviesCubit();
-    getPopularMoviesCubit();
+  Future<List<Results>?> startAll() async {
+    try {
+      emit(MovieLoading());
+      List<Results>? popularMovieModelList =
+          await JsonServices().fetchPopularMovies();
+      List<Results>? trendingMoviesModelList =
+          await JsonServices().fetchTrendingMovies();
+      Future.delayed(const Duration(seconds: 3));
+      emit(StartAllServices(trendingMoviesModelList, popularMovieModelList));
+    } catch (e) {
+      return null;
+    }
+    return null;
   }
 
   Future<List<Results>?> getTrendingMoviesCubit() async {
@@ -26,7 +36,7 @@ class MovieCubit extends Cubit<MovieState> {
       Future.delayed(const Duration(seconds: 3));
       emit(GetTrendingMovieState(trendingMoviesModelList));
     } catch (e) {
-      print("GetMoviesCubit Patladı Hocam");
+      return null;
     }
     return null;
   }
@@ -39,7 +49,7 @@ class MovieCubit extends Cubit<MovieState> {
       Future.delayed(const Duration(seconds: 3));
       emit(GetTrendingMovieState(popularMoviesModelList));
     } catch (e) {
-      print("getPopularMoviesCubit Patladı Hocam");
+      return null;
     }
     return null;
   }

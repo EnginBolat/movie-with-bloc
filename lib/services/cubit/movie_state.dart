@@ -9,6 +9,13 @@ class MovieLoading extends MovieState {
   MovieLoading();
 }
 
+class StartAllServices extends MovieState {
+  final List<Results>? trendingMoviesCubitList;
+  final List<Results>? popularMovieCubitList;
+
+  StartAllServices(this.trendingMoviesCubitList, this.popularMovieCubitList);
+}
+
 class GetTrendingMovieState extends MovieState {
   final List<Results>? trendingMoviesCubitList;
   GetTrendingMovieState(this.trendingMoviesCubitList);
