@@ -29,12 +29,6 @@ class _MovieDetailsPageState extends State<MovieDetailsPage> {
 
   @override
   Widget build(BuildContext context) {
-    // return Scaffold(
-    //   appBar: AppBar(),
-    //   body: Center(
-    //     child: Text(modelList?[0]["title"] ?? "BOŞ DATA"),
-    //   ),
-    // );
     return BlocProvider(
       create: (context) => MovieCubit()..getMovieDetails(widget.movieId),
       child: Scaffold(
@@ -76,7 +70,8 @@ class _MovieDetailsPageState extends State<MovieDetailsPage> {
                   )),
             ),
             Padding(
-              padding: const EdgeInsets.all(12.0),
+              padding:
+                  const EdgeInsets.symmetric(horizontal: 12.0, vertical: 24.0),
               child: Column(
                 children: [
                   Text(
@@ -90,69 +85,77 @@ class _MovieDetailsPageState extends State<MovieDetailsPage> {
                     pageContext: context,
                     coefficient: 0.02,
                   ),
-                  ClipRRect(
-                    borderRadius: BorderRadius.circular(20),
-                    child: Container(
-                      height: MediaQuery.of(context).size.height * .135,
-                      width: double.infinity,
-                      color: Theme.of(context).primaryColor,
-                      child: Padding(
-                        padding: const EdgeInsets.all(24.0),
-                        child: Column(
-                          children: [
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Text(
-                                  data?["genres"][0]["name"] ?? "No Genres",
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .headline6!
-                                      .copyWith(
-                                        color: Colors.white,
-                                      ),
-                                ),
-                                Text(
-                                  "⭐️ ${data?["vote_average"].toString() ?? "0.0"}",
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .headline6!
-                                      .copyWith(
-                                        color: Colors.white,
-                                      ),
-                                )
-                              ],
-                            ),
-                            SpacerWidget(
-                                pageContext: context, coefficient: 0.01),
-                            Align(
-                              alignment: Alignment.centerLeft,
-                              child: Text(
-                                data?["genres"][1]["name"] ?? "No Genres",
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .headline6!
-                                    .copyWith(
-                                      color: Colors.white,
-                                    ),
-                              ),
-                            ),
-                            SpacerWidget(
-                                pageContext: context, coefficient: 0.01),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ),
+                  _buildGenresBox(context, data),
                   SpacerWidget(pageContext: context, coefficient: 0.05),
                   Align(
-                      alignment: Alignment.centerLeft, child: Text("Overview",style: Theme.of(context).textTheme.headline3,)),
+                      alignment: Alignment.centerLeft,
+                      child: Text(
+                        "Overview",
+                        style: Theme.of(context).textTheme.headline3,
+                      )),
                   SpacerWidget(pageContext: context, coefficient: 0.02),
-                  Text(data?["overview"],style: Theme.of(context).textTheme.headline6!.copyWith(fontWeight: FontWeight.normal),),
+                  Text(
+                    data?["overview"],
+                    style: Theme.of(context)
+                        .textTheme
+                        .headline6!
+                        .copyWith(fontWeight: FontWeight.normal),
+                  ),
                 ],
               ),
             ),
           ],
+        ),
+      ),
+    );
+  }
+
+  ClipRRect _buildGenresBox(BuildContext context, Map<String, dynamic>? data) {
+    return ClipRRect(
+      borderRadius: BorderRadius.circular(20),
+      child: Container(
+        height: MediaQuery.of(context).size.height * .135,
+        width: double.infinity,
+        color: Theme.of(context).primaryColor,
+        child: Padding(
+          padding: const EdgeInsets.all(24.0),
+          child: Column(
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    data?["genres"][0]["name"] ?? "No Genres",
+                    style: Theme.of(context).textTheme.headline6!.copyWith(
+                          color: Colors.white,
+                        ),
+                  ),
+                  Text(
+                    "⭐️ ${data?["vote_average"].toString() ?? "0.0"}",
+                    style: Theme.of(context).textTheme.headline6!.copyWith(
+                          color: Colors.white,
+                        ),
+                  )
+                ],
+              ),
+              SpacerWidget(pageContext: context, coefficient: 0.01),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Align(
+                    alignment: Alignment.centerLeft,
+                    child: Text(
+                      data?["genres"][1]["name"] ?? "No Genres",
+                      style: Theme.of(context).textTheme.headline6!.copyWith(
+                            color: Colors.white,
+                          ),
+                    ),
+                  ),
+                ],
+              ),
+              SpacerWidget(pageContext: context, coefficient: 0.01),
+            ],
+          ),
         ),
       ),
     );
