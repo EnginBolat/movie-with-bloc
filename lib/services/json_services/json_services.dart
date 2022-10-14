@@ -1,9 +1,11 @@
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:movie_app_bloc/constants/app_api.dart';
-import 'package:movie_app_bloc/model/trending_movies_model.dart';
+import 'package:movie_app_bloc/model/movie_model.dart';
+import 'package:http/http.dart' as http;
 
 class JsonServices {
   Future<List<Results>?> fetchTrendingMovies() async {
@@ -31,6 +33,24 @@ class JsonServices {
           return data.map((e) => Results.fromJson(e)).toList();
         }
       }
+    } on DioError catch (e) {
+      _ShowDebug.showDioError(e);
+    }
+    return null;
+  }
+
+  Future<Map<String,dynamic>?> fetchMovieDetails(String movieId) async {
+    try {
+      var uriLink = Uri.parse(
+          "https://api.themoviedb.org/3/movie/$movieId?api_key=d2ff724b7d35aa2d69624813cb137d8b&language=en-US");
+      final response = await http.get(uriLink);
+
+      if (response.statusCode == HttpStatus.ok) {
+        var data = response.body;
+        Map<String, dynamic> a = Map<String, dynamic>.from(json.decode(response.body));
+        return a;
+      }
+      return null;
     } on DioError catch (e) {
       _ShowDebug.showDioError(e);
     }
