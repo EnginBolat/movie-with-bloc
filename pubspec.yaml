@@ -40,6 +40,8 @@ dependencies:
   meta: ^1.8.0
   dio: ^4.0.6
   flutter_bloc: ^8.1.1
+  bottom_navy_bar: ^6.0.0
+  http: ^0.13.5
 
 dev_dependencies:
   flutter_test:
