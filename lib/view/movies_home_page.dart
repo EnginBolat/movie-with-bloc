@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:movie_app_bloc/constants/app_api.dart';
-import 'package:movie_app_bloc/model/movie_model.dart';
 import 'package:movie_app_bloc/services/cubit/movie_cubit.dart';
 
-import 'movie_details_page.dart';
+import '../constants/app_padding.dart';
+import '../constants/app_text.dart';
+import '../widget/movies_list.dart';
 
 class MoviesHomePage extends StatelessWidget {
   const MoviesHomePage({super.key});
@@ -36,13 +36,29 @@ class MoviesHomePage extends StatelessWidget {
     return SingleChildScrollView(
       child: Column(
         children: [
-          _trendingMoviesList(
-            context,
-            state.trendingMoviesCubitList,
+          Padding(
+            padding: EdgeInsets.symmetric(
+                horizontal: MovieHomePagePadding.minimumValue),
+            child: MovieList(
+              title: MovieHomePage.trendingMoviesText,
+              movieDetailsList: state.trendingMoviesCubitList,
+            ),
           ),
-          _popularMoviesList(
-            context,
-            state.popularMovieCubitList,
+          Padding(
+            padding: EdgeInsets.symmetric(
+                horizontal: MovieHomePagePadding.minimumValue),
+            child: MovieList(
+              title: MovieHomePage.popularMoviesText,
+              movieDetailsList: state.popularMovieCubitList,
+            ),
+          ),
+          Padding(
+            padding: EdgeInsets.symmetric(
+                horizontal: MovieHomePagePadding.minimumValue),
+            child: MovieList(
+              title: MovieHomePage.upcomingMoviesText,
+              movieDetailsList: state.upcomingMovieCubitList,
+            ),
           ),
         ],
       ),
@@ -50,120 +66,6 @@ class MoviesHomePage extends StatelessWidget {
   }
 
   Text _error() => const Text("error");
-
-  Padding _trendingMoviesList(
-      BuildContext context, List<Results>? trendingMovieList) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 12.0, horizontal: 8.0),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            "Treding Movies",
-            style: Theme.of(context).textTheme.headline4,
-          ),
-          SizedBox(
-            height: MediaQuery.of(context).size.height * 0.5,
-            width: double.infinity,
-            child: ListView.builder(
-                scrollDirection: Axis.horizontal,
-                itemCount: trendingMovieList?.length ?? 0,
-                itemBuilder: ((context, index) {
-                  var trendingMovieData = trendingMovieList?[index];
-                  return Padding(
-                    padding: const EdgeInsets.symmetric(
-                        vertical: 12.0, horizontal: 8.0),
-                    child: Column(
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Text(
-                            trendingMovieData?.title ?? "",
-                            style: Theme.of(context).textTheme.headline6,
-                          ),
-                        ),
-                        GestureDetector(
-                          onTap: () {
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => MovieDetailsPage(
-                                      movieId:
-                                          trendingMovieData?.id.toString() ??
-                                              ""),
-                                ));
-                          },
-                          child: ClipRRect(
-                            borderRadius: BorderRadius.circular(15),
-                            child: SizedBox(
-                                height: 250,
-                                width: 170,
-                                child: Image.network(
-                                  ApiConst.posterPath +
-                                      (trendingMovieData?.posterPath ?? ""),
-                                )),
-                          ),
-                        ),
-                      ],
-                    ),
-                  );
-                })),
-          )
-        ],
-      ),
-    );
-  }
-
-  Padding _popularMoviesList(
-      BuildContext context, List<Results>? popularMovieList) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 12.0, horizontal: 8.0),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            "Popular Movies",
-            style: Theme.of(context).textTheme.headline4,
-          ),
-          SizedBox(
-            height: MediaQuery.of(context).size.height * 0.5,
-            width: double.infinity,
-            child: ListView.builder(
-                scrollDirection: Axis.horizontal,
-                itemCount: popularMovieList?.length ?? 0,
-                itemBuilder: ((context, index) {
-                  var trendingMovieData = popularMovieList?[index];
-                  return Padding(
-                    padding: const EdgeInsets.symmetric(
-                        vertical: 12.0, horizontal: 8.0),
-                    child: Column(
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Text(
-                            trendingMovieData?.title ?? "",
-                            style: Theme.of(context).textTheme.headline6,
-                          ),
-                        ),
-                        ClipRRect(
-                          borderRadius: BorderRadius.circular(15),
-                          child: SizedBox(
-                              height: 250,
-                              width: 170,
-                              child: Image.network(
-                                ApiConst.posterPath +
-                                    (trendingMovieData?.posterPath ?? ""),
-                              )),
-                        ),
-                      ],
-                    ),
-                  );
-                })),
-          )
-        ],
-      ),
-    );
-  }
 
   Center _movieLoading() {
     return const Center(
