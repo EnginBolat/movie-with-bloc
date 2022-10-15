@@ -46,3 +46,14 @@ class GetMovieActorsState extends MovieState {
   final List<MovieActorModel>? movieActorModel;
   GetMovieActorsState(this.movieActorModel);
 }
+
+class GetActorDetailsState extends MovieState {
+  final ActorDetailsModel? actorDetailsItem;
+  final List<Results>? movieHistoryList;
+  GetActorDetailsState(this.actorDetailsItem, this.movieHistoryList);
+}
+
+class GetActorMovieHistoryState extends MovieState {
+  final List<Results>? movieHistoryList;
+  GetActorMovieHistoryState(this.movieHistoryList);
+}

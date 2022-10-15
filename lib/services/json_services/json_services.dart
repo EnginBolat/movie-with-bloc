@@ -7,6 +7,7 @@ import 'package:movie_app_bloc/constants/app_api.dart';
 import 'package:movie_app_bloc/model/movie_model.dart';
 import 'package:http/http.dart' as http;
 
+import '../../model/actor_details_page.dart';
 import '../../model/movie_actor_model.dart';
 import '../../model/tvseries_model.dart';
 
@@ -16,7 +17,6 @@ class JsonServices {
       final response = await Dio().get(ApiConst.trendingMovies);
       if (response.statusCode == HttpStatus.ok) {
         final datas = response.data["results"];
-
         if (datas is List) {
           return datas.map((e) => Results.fromJson(e)).toList();
         }
@@ -78,12 +78,41 @@ class JsonServices {
   Future<List<MovieActorModel>?> fetchMovieActors(String id) async {
     try {
       final response = await Dio().get(
-        "https://api.themoviedb.org/3/movie/$id/credits?api_key=d2ff724b7d35aa2d69624813cb137d8b&language=en-US"
-      );
+          "https://api.themoviedb.org/3/movie/$id/credits?api_key=d2ff724b7d35aa2d69624813cb137d8b&language=en-US");
       if (response.statusCode == HttpStatus.ok) {
         var data = response.data["cast"];
         if (data is List) {
           return data.map((e) => MovieActorModel.fromJson(e)).toList();
+        }
+      }
+    } on DioError catch (e) {
+      _ShowDebug.showDioError(e);
+    }
+    return null;
+  }
+
+  Future<ActorDetailsModel?> fetchActorDetails(String id) async {
+    try {
+      var response = await Dio().get(
+          "https://api.themoviedb.org/3/person/$id?api_key=d2ff724b7d35aa2d69624813cb137d8b&language=en-US");
+      if (response.statusCode == HttpStatus.ok) {
+        var data = response.data;
+        return ActorDetailsModel.fromJson(data);
+      }
+    } on DioError catch (e) {
+      _ShowDebug.showDioError(e);
+    }
+    return null;
+  }
+
+  Future<List<Results>?> fetchActorMovieHistory(String id) async {
+    try {
+      var response = await Dio().get(
+          "https://api.themoviedb.org/3/person/$id/movie_credits?api_key=d2ff724b7d35aa2d69624813cb137d8b&language=en-US");
+      if (response.statusCode == HttpStatus.ok) {
+        var data = response.data["cast"];
+        if (data is List) {
+          return data.map((e) => Results.fromJson(e)).toList();
         }
       }
     } on DioError catch (e) {
