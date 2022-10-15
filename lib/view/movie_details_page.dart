@@ -118,8 +118,11 @@ class MovieDetailsPage extends StatelessWidget {
                                     Navigator.push(
                                       context,
                                       MaterialPageRoute(
-                                        builder: (context) =>
-                                            ActorDetailsPage(id: movieActorList?[index].id.toString() ?? ""),
+                                        builder: (context) => ActorDetailsPage(
+                                            id: movieActorList?[index]
+                                                    .id
+                                                    .toString() ??
+                                                ""),
                                       ),
                                     );
                                   },
@@ -128,10 +131,19 @@ class MovieDetailsPage extends StatelessWidget {
                                         0.4,
                                     width:
                                         MediaQuery.of(context).size.width * 0.5,
-                                    child: Image.network(
-                                      ApiConst.posterPath +
+                                    child: FadeInImage.assetNetwork(
+                                      placeholder:
+                                          "lib/assets/images/placeholder.png",
+                                      image: ApiConst.posterPath +
                                           (movieActorList?[index].profilePath ??
                                               ""),
+                                      imageErrorBuilder:
+                                          (context, error, stackTrace) {
+                                        return Center(
+                                            child: Image.asset(
+                                                "lib/assets/images/placeholder.png"));
+                                      },
+                                      fit: BoxFit.contain,
                                     ),
                                   ),
                                 ),

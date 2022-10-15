@@ -60,12 +60,20 @@ class MovieList extends StatelessWidget {
                           borderRadius: BorderRadius.circular(
                               MovieListPageRadius.highValue),
                           child: SizedBox(
-                              height: MediaQuery.of(context).size.height * 0.3,
-                              width: MediaQuery.of(context).size.width * 0.4,
-                              child: Image.network(
-                                ApiConst.posterPath +
-                                    (movieList?.posterPath ?? ""),
-                              )),
+                            height: MediaQuery.of(context).size.height * 0.3,
+                            width: MediaQuery.of(context).size.width * 0.4,
+                            child: FadeInImage.assetNetwork(
+                              placeholder: "lib/assets/images/placeholder.png",
+                              image: ApiConst.posterPath +
+                                  (movieList?.posterPath ?? ""),
+                              imageErrorBuilder: (context, error, stackTrace) {
+                                return Center(
+                                    child: Image.asset(
+                                        "lib/assets/images/placeholder.png"));
+                              },
+                              fit: BoxFit.contain,
+                            ),
+                          ),
                         ),
                       ),
                     ],

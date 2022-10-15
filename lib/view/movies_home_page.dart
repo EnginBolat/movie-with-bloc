@@ -20,7 +20,7 @@ class MoviesHomePage extends StatelessWidget {
           builder: (context, state) {
             if (state is MovieLoading) {
               return _movieLoading();
-            } else if (state is StartAllServices) {
+            } else if (state is StartAllMovieServices) {
               return _homePageMainWidget(context, state);
             } else {
               return _error();
@@ -32,7 +32,7 @@ class MoviesHomePage extends StatelessWidget {
   }
 
   SingleChildScrollView _homePageMainWidget(
-      BuildContext context, StartAllServices state) {
+      BuildContext context, StartAllMovieServices state) {
     return SingleChildScrollView(
       child: Column(
         children: [
