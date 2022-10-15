@@ -9,12 +9,12 @@ class MovieLoading extends MovieState {
   MovieLoading();
 }
 
-class StartAllServices extends MovieState {
+class StartAllMovieServices extends MovieState {
   final List<Results>? trendingMoviesCubitList;
   final List<Results>? popularMovieCubitList;
   final List<Results>? upcomingMovieCubitList;
 
-  StartAllServices(
+  StartAllMovieServices(
     this.trendingMoviesCubitList,
     this.popularMovieCubitList,
     this.upcomingMovieCubitList,
@@ -56,4 +56,31 @@ class GetActorDetailsState extends MovieState {
 class GetActorMovieHistoryState extends MovieState {
   final List<Results>? movieHistoryList;
   GetActorMovieHistoryState(this.movieHistoryList);
+}
+
+class StartAllTvSeriesServiceState extends MovieState {
+  final List<TvSeriesResult>? popularTvSeriesList;
+  final List<TvSeriesResult>? trendingTvSeriesList;
+
+  StartAllTvSeriesServiceState(
+      this.popularTvSeriesList, this.trendingTvSeriesList);
+}
+
+class GetPopularTvSeriesState extends MovieState {
+  final List<TvSeriesResult>? popularTvSeriesList;
+
+  GetPopularTvSeriesState(this.popularTvSeriesList);
+}
+
+class GetTrendingTvSeriesState extends MovieState {
+  final List<TvSeriesResult>? trendingTvSeriesList;
+
+  GetTrendingTvSeriesState(this.trendingTvSeriesList);
+}
+
+class GetTvSeriesDataState extends MovieState {
+  final Map<String, dynamic>? tvSeriesDetailsModel;
+  final List<TvSeriesActorModel>? tvSeriesActorModel;
+
+  GetTvSeriesDataState(this.tvSeriesDetailsModel, this.tvSeriesActorModel);
 }

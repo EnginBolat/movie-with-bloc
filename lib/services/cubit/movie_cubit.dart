@@ -2,8 +2,10 @@ import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
 import 'package:movie_app_bloc/model/movie_actor_model.dart';
 import 'package:movie_app_bloc/model/movie_model.dart';
+import 'package:movie_app_bloc/model/tvseries_actor_model.dart';
+import 'package:movie_app_bloc/model/tvseries_model.dart';
 
-import '../../model/actor_details_page.dart';
+import '../../model/actor_details_model.dart';
 import '../json_services/json_services.dart';
 
 part 'movie_state.dart';
@@ -22,7 +24,7 @@ class MovieCubit extends Cubit<MovieState> {
           await JsonServices().fetchUpcomingMovies();
 
       Future.delayed(const Duration(seconds: 3));
-      emit(StartAllServices(
+      emit(StartAllMovieServices(
         trendingMoviesModelList,
         popularMovieModelList,
         upcomingMovieModelList,
@@ -121,6 +123,62 @@ class MovieCubit extends Cubit<MovieState> {
           await JsonServices().fetchActorMovieHistory(id);
       Future.delayed(const Duration(seconds: 3));
       emit(GetActorMovieHistoryState(historyList));
+    } catch (e) {
+      print(e);
+    }
+    return null;
+  }
+
+  Future<List<TvSeriesResult>?> getPopularTvSeries() async {
+    try {
+      emit(MovieLoading());
+      List<TvSeriesResult>? popularTvSeriesList =
+          await JsonServices().fetchPopularTvSeries();
+      Future.delayed(const Duration(seconds: 3));
+      emit(GetPopularTvSeriesState(popularTvSeriesList));
+    } catch (e) {
+      print(e);
+    }
+    return null;
+  }
+
+  Future<List<TvSeriesResult>?> getTrendingTvSeries() async {
+    try {
+      emit(MovieLoading());
+      List<TvSeriesResult>? trendingTvSeriesList =
+          await JsonServices().fetchTrendingTvSeries();
+      Future.delayed(const Duration(seconds: 3));
+      emit(GetTrendingTvSeriesState(trendingTvSeriesList));
+    } catch (e) {
+      print(e);
+    }
+    return null;
+  }
+
+  Future<List<Results>?> StartallTvSeriesService() async {
+    try {
+      emit(MovieLoading());
+      List<TvSeriesResult>? trendingTvSeriesList =
+          await JsonServices().fetchTrendingTvSeries();
+      List<TvSeriesResult>? popularTvSeries =
+          await JsonServices().fetchPopularTvSeries();
+      Future.delayed(const Duration(seconds: 3));
+      emit(StartAllTvSeriesServiceState(popularTvSeries, trendingTvSeriesList));
+    } catch (e) {
+      print(e);
+    }
+    return null;
+  }
+
+  Future<Map<String, dynamic>?> getTvSeriesDetails(String id) async {
+    try {
+      emit(MovieLoading());
+      Map<String, dynamic>? popularMoviesModelList =
+          await JsonServices().fetchTvSeriesDetails(id);
+      List<TvSeriesActorModel>? actorList =
+          await JsonServices().fetchTvSeriesActorDetails(id);
+      Future.delayed(const Duration(seconds: 3));
+      emit(GetTvSeriesDataState(popularMoviesModelList,actorList));
     } catch (e) {
       print(e);
     }
