@@ -7,6 +7,7 @@ import 'package:movie_app_bloc/constants/app_api.dart';
 import 'package:movie_app_bloc/model/movie_model.dart';
 import 'package:http/http.dart' as http;
 
+import '../../model/movie_actor_model.dart';
 import '../../model/tvseries_model.dart';
 
 class JsonServices {
@@ -41,6 +42,21 @@ class JsonServices {
     return null;
   }
 
+  Future<List<Results>?> fetchUpcomingMovies() async {
+    try {
+      final response = await Dio().get(ApiConst.upcomingMovies);
+      if (response.statusCode == HttpStatus.ok) {
+        var data = response.data["results"];
+        if (data is List) {
+          return data.map((e) => Results.fromJson(e)).toList();
+        }
+      }
+    } on DioError catch (e) {
+      _ShowDebug.showDioError(e);
+    }
+    return null;
+  }
+
   Future<Map<String, dynamic>?> fetchMovieDetails(String movieId) async {
     try {
       var uriLink = Uri.parse(
@@ -59,16 +75,17 @@ class JsonServices {
     return null;
   }
 
-  Future<List<TvSeriesResult>?> fetchUpcomingMovies() async {
+  Future<List<MovieActorModel>?> fetchMovieActors(String id) async {
     try {
-      var response = await Dio().get(ApiConst.upcomingMovies);
+      final response = await Dio().get(
+        "https://api.themoviedb.org/3/movie/$id/credits?api_key=d2ff724b7d35aa2d69624813cb137d8b&language=en-US"
+      );
       if (response.statusCode == HttpStatus.ok) {
-        var data = response.data["results"];
-
-        print(data.map((e) => TvSeriesResult.fromJson(e)).toList());
-        return data.map((e) => TvSeriesResult.fromJson(e)).toList();
+        var data = response.data["cast"];
+        if (data is List) {
+          return data.map((e) => MovieActorModel.fromJson(e)).toList();
+        }
       }
-      return null;
     } on DioError catch (e) {
       _ShowDebug.showDioError(e);
     }

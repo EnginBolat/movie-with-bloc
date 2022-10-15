@@ -1,8 +1,8 @@
 import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
+import 'package:movie_app_bloc/model/movie_actor_model.dart';
 import 'package:movie_app_bloc/model/movie_model.dart';
 
-import '../../model/tvseries_model.dart';
 import '../json_services/json_services.dart';
 
 part 'movie_state.dart';
@@ -17,8 +17,15 @@ class MovieCubit extends Cubit<MovieState> {
           await JsonServices().fetchPopularMovies();
       List<Results>? trendingMoviesModelList =
           await JsonServices().fetchTrendingMovies();
+      List<Results>? upcomingMovieModelList =
+          await JsonServices().fetchUpcomingMovies();
+
       Future.delayed(const Duration(seconds: 3));
-      emit(StartAllServices(trendingMoviesModelList, popularMovieModelList));
+      emit(StartAllServices(
+        trendingMoviesModelList,
+        popularMovieModelList,
+        upcomingMovieModelList,
+      ));
     } catch (e) {
       return null;
     }
@@ -51,10 +58,10 @@ class MovieCubit extends Cubit<MovieState> {
     return null;
   }
 
-  Future<List<TvSeriesResult>?> getUpcomingMovies() async {
+  Future<List<Results>?> getUpcomingMovies() async {
     try {
       emit(MovieLoading());
-      List<TvSeriesResult>? upcomingMovieList =
+      List<Results>? upcomingMovieList =
           await JsonServices().fetchUpcomingMovies();
       Future.delayed(const Duration(seconds: 3));
       emit(UpcomingMovieState(upcomingMovieList));
@@ -69,8 +76,23 @@ class MovieCubit extends Cubit<MovieState> {
       emit(MovieLoading());
       Map<String, dynamic>? popularMoviesModelList =
           await JsonServices().fetchMovieDetails(movieId);
+      List<MovieActorModel>? movieActorModelList =
+          await JsonServices().fetchMovieActors(movieId);
       Future.delayed(const Duration(seconds: 3));
-      emit(GetMovieDataState(popularMoviesModelList));
+      emit(GetMovieDataState(popularMoviesModelList, movieActorModelList));
+    } catch (e) {
+      print(e);
+    }
+    return null;
+  }
+
+  Future<List<MovieActorModel>?> getMovieActors(String id) async {
+    try {
+      emit(MovieLoading());
+      List<MovieActorModel>? movieActorModelList =
+          await JsonServices().fetchMovieActors(id);
+      Future.delayed(const Duration(seconds: 3));
+      emit(GetMovieActorsState(movieActorModelList));
     } catch (e) {
       print(e);
     }
