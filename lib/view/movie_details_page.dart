@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:movie_app_bloc/constants/app_radius.dart';
+import 'package:movie_app_bloc/view/actor_details_page.dart';
 import 'package:movie_app_bloc/widget/spacer_widget.dart';
 
 import '../constants/app_api.dart';
@@ -75,7 +76,7 @@ class MovieDetailsPage extends StatelessWidget {
                     pageContext: context,
                     coefficient: 0.02,
                   ),
-                  _buildGenresBox(context, data),
+                  // _buildGenresBox(context, data),
                   SpacerWidget(pageContext: context, coefficient: 0.05),
                   Align(
                       alignment: Alignment.centerLeft,
@@ -112,15 +113,26 @@ class MovieDetailsPage extends StatelessWidget {
                                           fontWeight: FontWeight.w600,
                                           color: Colors.black54),
                                 ),
-                                SizedBox(
-                                  height:
-                                      MediaQuery.of(context).size.height * 0.4,
-                                  width:
-                                      MediaQuery.of(context).size.width * 0.5,
-                                  child: Image.network(
-                                    ApiConst.posterPath +
-                                        (movieActorList?[index].profilePath ??
-                                            ""),
+                                GestureDetector(
+                                  onTap: () {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) =>
+                                            ActorDetailsPage(id: movieActorList?[index].id.toString() ?? ""),
+                                      ),
+                                    );
+                                  },
+                                  child: SizedBox(
+                                    height: MediaQuery.of(context).size.height *
+                                        0.4,
+                                    width:
+                                        MediaQuery.of(context).size.width * 0.5,
+                                    child: Image.network(
+                                      ApiConst.posterPath +
+                                          (movieActorList?[index].profilePath ??
+                                              ""),
+                                    ),
                                   ),
                                 ),
                               ],
