@@ -13,3 +13,8 @@ class MovieHomePage{
   static String popularMoviesText = "Popular Movies";
   static String upcomingMoviesText = "Upcoming Movies";
 }
+
+class ActorDetailsPageText{
+  static String overviewText = "Overview";
+  static String biography= "Biography";
+}
