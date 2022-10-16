@@ -22,6 +22,8 @@ dependencies:
   # UI
   bottom_navy_bar: ^6.0.0
   flutter_native_splash: ^2.2.11
+  internet_connection_checker: ^1.0.0+1
+  connectivity_plus: ^2.3.9
 
 flutter_native_splash:
   color: "#FF8662"
