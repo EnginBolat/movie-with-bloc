@@ -1,13 +1,14 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:movie_app_bloc/constants/app_radius.dart';
-import 'package:movie_app_bloc/view/actor_details_page.dart';
-import 'package:movie_app_bloc/widget/spacer_widget.dart';
 
+import '../constants/app_radius.dart';
 import '../constants/app_api.dart';
 import '../constants/app_padding.dart';
+import '../view/actor_details_page.dart';
 import '../model/movie_actor_model.dart';
 import '../services/cubit/movie_cubit.dart';
+import '../widget/spacer_widget.dart';
 
 class MovieDetailsPage extends StatelessWidget {
   const MovieDetailsPage({super.key, required this.movieId});
@@ -20,7 +21,18 @@ class MovieDetailsPage extends StatelessWidget {
         return MovieCubit()..getMovieDetails(movieId);
       },
       child: Scaffold(
-        appBar: AppBar(),
+        appBar: AppBar(
+          actions: [
+            IconButton(
+              onPressed: () {
+                if (kDebugMode) {
+                  print("Beğenilenlere Eklendi id:$movieId");
+                }
+              },
+              icon: const Icon(Icons.favorite_outline),
+            ),
+          ],
+        ),
         body: BlocConsumer<MovieCubit, MovieState>(
           listener: (context, state) {},
           builder: (context, state) {

@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:movie_app_bloc/services/cubit/movie_cubit.dart';
@@ -18,7 +19,18 @@ class TvSeriesDetailsPage extends StatelessWidget {
     return BlocProvider(
       create: (context) => MovieCubit()..getTvSeriesDetails(id),
       child: Scaffold(
-        appBar: AppBar(),
+        appBar: AppBar(
+          actions: [
+            IconButton(
+              onPressed: () {
+                if (kDebugMode) {
+                  print("Beğenilenlere Eklendi id:$id");
+                }
+              },
+              icon: const Icon(Icons.favorite_outline),
+            ),
+          ],
+        ),
         body: BlocConsumer<MovieCubit, MovieState>(
           listener: (context, state) {},
           builder: (context, state) {
