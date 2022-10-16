@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:movie_app_bloc/services/cubit/movie_cubit.dart';
+import 'package:movie_app_bloc/widget/error_widget.dart';
+import 'package:movie_app_bloc/widget/is_loading.dart';
 
 import '../constants/app_padding.dart';
 import '../constants/app_text.dart';
@@ -19,11 +21,11 @@ class MoviesHomePage extends StatelessWidget {
           listener: (context, state) {},
           builder: (context, state) {
             if (state is MovieLoading) {
-              return _movieLoading();
+              return const IsLoading();
             } else if (state is StartAllMovieServices) {
               return _homePageMainWidget(context, state);
             } else {
-              return _error();
+              return const ErrorPage(error: "Error");
             }
           },
         ),
@@ -62,14 +64,6 @@ class MoviesHomePage extends StatelessWidget {
           ),
         ],
       ),
-    );
-  }
-
-  Text _error() => const Text("error");
-
-  Center _movieLoading() {
-    return const Center(
-      child: CircularProgressIndicator(),
     );
   }
 }

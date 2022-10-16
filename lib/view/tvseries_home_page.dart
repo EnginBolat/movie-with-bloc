@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:movie_app_bloc/services/cubit/movie_cubit.dart';
-import 'package:movie_app_bloc/widget/movies_list.dart';
+import 'package:movie_app_bloc/widget/error_widget.dart';
+import 'package:movie_app_bloc/widget/is_loading.dart';
 import 'package:movie_app_bloc/widget/spacer_widget.dart';
 import 'package:movie_app_bloc/widget/tv_series_list.dart';
 
@@ -11,14 +12,14 @@ class TvSeriesHomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => MovieCubit()..StartallTvSeriesService(),
+      create: (context) => MovieCubit()..startallTvSeriesService(),
       child: Scaffold(
           appBar: AppBar(),
           body: BlocConsumer<MovieCubit, MovieState>(
             listener: (context, state) {},
             builder: (context, state) {
               if (state is MovieLoading) {
-                return _buildLoading();
+                return const IsLoading();
               } else if (state is StartAllTvSeriesServiceState) {
                 return SingleChildScrollView(
                   child: Column(
@@ -34,20 +35,10 @@ class TvSeriesHomePage extends StatelessWidget {
                   ),
                 );
               } else {
-                return _buildError();
+                return const ErrorPage(error: "Error");
               }
             },
           )),
     );
   }
-
-  Center _buildError() {
-    return const Center(
-      child: Text("error"),
-    );
-  }
-
-  Center _buildLoading() => const Center(
-        child: CircularProgressIndicator(),
-      );
 }

@@ -1,6 +1,8 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:movie_app_bloc/widget/error_widget.dart';
+import 'package:movie_app_bloc/widget/is_loading.dart';
 
 import '../constants/app_radius.dart';
 import '../constants/app_api.dart';
@@ -37,12 +39,12 @@ class MovieDetailsPage extends StatelessWidget {
           listener: (context, state) {},
           builder: (context, state) {
             if (state is MovieLoading) {
-              return _movieLoading();
+              return const IsLoading();
             } else if (state is GetMovieDataState) {
               var data = state.movieDetailsModel;
               return _movieDetailsWidget(context, data, state.movieActorModel);
             } else {
-              return _error();
+              return const ErrorPage(error: "error");
             }
           },
         ),
@@ -94,7 +96,7 @@ class MovieDetailsPage extends StatelessWidget {
                       alignment: Alignment.centerLeft,
                       child: Text(
                         "Overview",
-                        style: Theme.of(context).textTheme.headline3,
+                        style: Theme.of(context).textTheme.headline4,
                       )),
                   SpacerWidget(pageContext: context, coefficient: 0.02),
                   Text(
@@ -102,7 +104,7 @@ class MovieDetailsPage extends StatelessWidget {
                     style: Theme.of(context)
                         .textTheme
                         .headline6!
-                        .copyWith(fontWeight: FontWeight.normal),
+                        .copyWith(fontWeight: FontWeight.w300, fontSize: 16),
                   ),
                   SpacerWidget(pageContext: context, coefficient: 0.05),
                   SizedBox(
@@ -223,16 +225,4 @@ class MovieDetailsPage extends StatelessWidget {
       ),
     );
   }
-}
-
-Center _movieLoading() {
-  return const Center(
-    child: CircularProgressIndicator(),
-  );
-}
-
-Center _error() {
-  return const Center(
-    child: Text("Error"),
-  );
 }

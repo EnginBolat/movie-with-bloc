@@ -4,6 +4,8 @@ import 'package:movie_app_bloc/model/movie_model.dart';
 import 'package:movie_app_bloc/model/actor_details_model.dart';
 import 'package:movie_app_bloc/services/cubit/movie_cubit.dart';
 import 'package:movie_app_bloc/view/movie_details_page.dart';
+import 'package:movie_app_bloc/widget/error_widget.dart';
+import 'package:movie_app_bloc/widget/is_loading.dart';
 
 import '../constants/app_api.dart';
 import '../constants/app_padding.dart';
@@ -25,13 +27,13 @@ class ActorDetailsPage extends StatelessWidget {
           listener: (context, state) {},
           builder: (context, state) {
             if (state is MovieLoading) {
-              return _movieLoading();
+              return const IsLoading();
             } else if (state is GetActorDetailsState) {
               var data = state.actorDetailsItem;
               var movieHistory = state.movieHistoryList;
               return _buildActorInfo(context, data, movieHistory);
             } else {
-              return _error();
+              return const ErrorPage(error: "ERROR",);
             }
           },
         ),
@@ -91,7 +93,7 @@ class ActorDetailsPage extends StatelessWidget {
                     style: Theme.of(context)
                         .textTheme
                         .headline6!
-                        .copyWith(fontWeight: FontWeight.normal),
+                        .copyWith(fontWeight: FontWeight.w300, fontSize: 16),
                   ),
                   SpacerWidget(pageContext: context, coefficient: 0.05),
                   SizedBox(
@@ -162,16 +164,4 @@ class ActorDetailsPage extends StatelessWidget {
       ),
     );
   }
-}
-
-Center _movieLoading() {
-  return const Center(
-    child: CircularProgressIndicator(),
-  );
-}
-
-Center _error() {
-  return const Center(
-    child: Text("Error"),
-  );
 }
