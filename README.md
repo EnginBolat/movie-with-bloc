@@ -1,17 +1,61 @@
-# movie_app_bloc
+# Flutter - Movie-TV Show App
 
-A new Flutter project.
+News App I made with Flutter.
 
-## Getting Started
+## About App
 
-This project is a starting point for a Flutter application.
+Things To Do
 
-A few resources to get you started if this is your first Flutter project:
+```bash
+  ✅ Splash Screen
+  ✅ Movie Home Screen
+  ✅ Movie Details Screen
+  ✅ Tv Shows Home Screen
+  ✅ Tv Shows Details Page
+  ✅ Actor Details Page
+  ✅ Network Connectivity Checker
+  ❌ Profile Page
+```
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+Dependencies
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
-# movie-with-bloc
+```bash
+  bloc: https://pub.dev/packages/bloc
+  meta: https://pub.dev/packages/meta
+  flutter_bloc: https://pub.dev/packages/flutter_bloc
+  dio: https://pub.dev/packages/dio
+  http: https://pub.dev/packages/http
+  internet_connection_checker: https://pub.dev/packages/internet_connection_checker
+  connectivity_plus: https://pub.dev/packages/connectivity_plus
+  bottom_navy_bar: https://pub.dev/packages/bottom_navy_bar
+  flutter_native_splash: https://pub.dev/packages/flutter_native_splash
+
+```
+
+## Run Locally
+
+Clone the project
+
+```bash
+  https://github.com/EnginBolat/movie-with-bloc.git
+```
+
+Go to the project directory
+
+```bash
+  cd movie-with-bloc
+```
+
+Install dependencies
+
+```bash
+  flutter pub get
+```
+
+Run App
+
+```bash
+  flutter run
+```
+
+
