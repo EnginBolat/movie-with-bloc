@@ -5,7 +5,6 @@ import 'package:movie_app_bloc/view/tv_series_details_page.dart';
 import '../constants/app_api.dart';
 import '../constants/app_padding.dart';
 import '../constants/app_radius.dart';
-import '../view/movie_details_page.dart';
 
 class TvSeriesList extends StatelessWidget {
   const TvSeriesList({
