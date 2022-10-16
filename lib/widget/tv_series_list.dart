@@ -21,9 +21,13 @@ class TvSeriesList extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
-          title,
-          style: Theme.of(context).textTheme.headline4,
+        Padding(
+          padding: EdgeInsets.only(
+              top: AppPadding.maximumValue, left: AppPadding.normalValue),
+          child: Text(
+            title,
+            style: Theme.of(context).textTheme.headline4,
+          ),
         ),
         SizedBox(
           height: MediaQuery.of(context).size.height * 0.4,

@@ -21,9 +21,12 @@ class MovieList extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
-          title,
-          style: Theme.of(context).textTheme.headline4,
+        Padding(
+          padding: EdgeInsets.only(top:AppPadding.maximumValue,left: AppPadding.normalValue),
+          child: Text(
+            title,
+            style: Theme.of(context).textTheme.headline4,
+          ),
         ),
         SizedBox(
           height: MediaQuery.of(context).size.height * 0.4,
@@ -37,46 +40,54 @@ class MovieList extends StatelessWidget {
                   padding: EdgeInsets.symmetric(
                       vertical: MovieHomePagePadding.normalValue,
                       horizontal: MovieHomePagePadding.minimumValue),
-                  child: Column(
-                    children: [
-                      Padding(
-                        padding:
-                            EdgeInsets.all(MovieHomePagePadding.minimumValue),
-                        child: Text(
-                          movieList?.title ?? "",
-                          style: Theme.of(context).textTheme.headline6,
+                  child: Padding(
+                    padding: EdgeInsets.all(MoviePagePaddig.minimumValue),
+                    child: Column(
+                      children: [
+                        Padding(
+                          padding: EdgeInsets.all(
+                              MovieHomePagePadding.minimumValue),
+                          child: Text(
+                            movieList?.title ?? "",
+                            style: Theme.of(context).textTheme.headline6,
+                          ),
                         ),
-                      ),
-                      GestureDetector(
-                        onTap: () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => MovieDetailsPage(
-                                    movieId: movieList?.id.toString() ?? ""),
-                              ));
-                        },
-                        child: ClipRRect(
-                          borderRadius: BorderRadius.circular(
-                              MovieListPageRadius.highValue),
-                          child: SizedBox(
-                            height: MediaQuery.of(context).size.height * 0.3,
-                            width: MediaQuery.of(context).size.width * 0.4,
-                            child: FadeInImage.assetNetwork(
-                              placeholder: "lib/assets/images/placeholder.png",
-                              image: ApiConst.posterPath +
-                                  (movieList?.posterPath ?? ""),
-                              imageErrorBuilder: (context, error, stackTrace) {
-                                return Center(
-                                    child: Image.asset(
-                                        "lib/assets/images/placeholder.png"));
-                              },
-                              fit: BoxFit.contain,
+                        GestureDetector(
+                          onTap: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => MovieDetailsPage(
+                                      movieId:
+                                          movieList?.id.toString() ?? ""),
+                                ));
+                          },
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(
+                                MovieListPageRadius.highValue),
+                            child: SizedBox(
+                              height:
+                                  MediaQuery.of(context).size.height * 0.3,
+                              width:
+                                  MediaQuery.of(context).size.width * 0.4,
+                              child: FadeInImage.assetNetwork(
+                                placeholder:
+                                    "lib/assets/images/placeholder.png",
+                                image: ApiConst.posterPath +
+                                    (movieList?.posterPath ?? ""),
+                                imageErrorBuilder:
+                                    (context, error, stackTrace) {
+                                  return Center(
+                                      child: Image.asset(
+                                          "lib/assets/images/placeholder.png"));
+                                },
+                                fit: BoxFit.contain,
+                              ),
                             ),
                           ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                 );
               })),
