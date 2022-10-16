@@ -3,7 +3,6 @@ import 'dart:io';
 
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
-import 'package:flutter/material.dart';
 import 'package:movie_app_bloc/constants/app_api.dart';
 import 'package:movie_app_bloc/model/movie_model.dart';
 import 'package:http/http.dart' as http;

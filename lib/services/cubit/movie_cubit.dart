@@ -1,5 +1,6 @@
 import 'package:bloc/bloc.dart';
-import 'package:meta/meta.dart';
+import 'package:flutter/foundation.dart';
+import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:movie_app_bloc/model/movie_actor_model.dart';
 import 'package:movie_app_bloc/model/movie_model.dart';
 import 'package:movie_app_bloc/model/tvseries_actor_model.dart';
@@ -23,12 +24,13 @@ class MovieCubit extends Cubit<MovieState> {
       List<Results>? upcomingMovieModelList =
           await JsonServices().fetchUpcomingMovies();
 
-      Future.delayed(const Duration(seconds: 3));
+      Future.delayed(const Duration(seconds: 1));
       emit(StartAllMovieServices(
         trendingMoviesModelList,
         popularMovieModelList,
         upcomingMovieModelList,
       ));
+      FlutterNativeSplash.remove();
     } catch (e) {
       return null;
     }
@@ -40,7 +42,7 @@ class MovieCubit extends Cubit<MovieState> {
       emit(MovieLoading());
       List<Results>? trendingMoviesModelList =
           await JsonServices().fetchTrendingMovies();
-      Future.delayed(const Duration(seconds: 3));
+      Future.delayed(const Duration(seconds: 1));
       emit(GetTrendingMovieState(trendingMoviesModelList));
     } catch (e) {
       return null;
@@ -53,7 +55,7 @@ class MovieCubit extends Cubit<MovieState> {
       emit(MovieLoading());
       List<Results>? popularMoviesModelList =
           await JsonServices().fetchTrendingMovies();
-      Future.delayed(const Duration(seconds: 3));
+      Future.delayed(const Duration(seconds: 1));
       emit(GetTrendingMovieState(popularMoviesModelList));
     } catch (e) {
       return null;
@@ -66,10 +68,10 @@ class MovieCubit extends Cubit<MovieState> {
       emit(MovieLoading());
       List<Results>? upcomingMovieList =
           await JsonServices().fetchUpcomingMovies();
-      Future.delayed(const Duration(seconds: 3));
+      Future.delayed(const Duration(seconds: 1));
       emit(UpcomingMovieState(upcomingMovieList));
     } catch (e) {
-      print(e);
+      _ShowDebug.showError(e.toString());
     }
     return null;
   }
@@ -81,10 +83,10 @@ class MovieCubit extends Cubit<MovieState> {
           await JsonServices().fetchMovieDetails(movieId);
       List<MovieActorModel>? movieActorModelList =
           await JsonServices().fetchMovieActors(movieId);
-      Future.delayed(const Duration(seconds: 3));
+      Future.delayed(const Duration(seconds: 1));
       emit(GetMovieDataState(popularMoviesModelList, movieActorModelList));
     } catch (e) {
-      print(e);
+      _ShowDebug.showError(e.toString());
     }
     return null;
   }
@@ -94,10 +96,10 @@ class MovieCubit extends Cubit<MovieState> {
       emit(MovieLoading());
       List<MovieActorModel>? movieActorModelList =
           await JsonServices().fetchMovieActors(id);
-      Future.delayed(const Duration(seconds: 3));
+      Future.delayed(const Duration(seconds: 1));
       emit(GetMovieActorsState(movieActorModelList));
     } catch (e) {
-      print(e);
+      _ShowDebug.showError(e.toString());
     }
     return null;
   }
@@ -108,10 +110,10 @@ class MovieCubit extends Cubit<MovieState> {
       ActorDetailsModel? modelItem = await JsonServices().fetchActorDetails(id);
       List<Results>? historyList =
           await JsonServices().fetchActorMovieHistory(id);
-      Future.delayed(const Duration(seconds: 3));
+      Future.delayed(const Duration(seconds: 1));
       emit(GetActorDetailsState(modelItem, historyList));
     } catch (e) {
-      print(e);
+      _ShowDebug.showError(e.toString());
     }
     return null;
   }
@@ -121,10 +123,10 @@ class MovieCubit extends Cubit<MovieState> {
       emit(MovieLoading());
       List<Results>? historyList =
           await JsonServices().fetchActorMovieHistory(id);
-      Future.delayed(const Duration(seconds: 3));
+      Future.delayed(const Duration(seconds: 1));
       emit(GetActorMovieHistoryState(historyList));
     } catch (e) {
-      print(e);
+      _ShowDebug.showError(e.toString());
     }
     return null;
   }
@@ -134,10 +136,10 @@ class MovieCubit extends Cubit<MovieState> {
       emit(MovieLoading());
       List<TvSeriesResult>? popularTvSeriesList =
           await JsonServices().fetchPopularTvSeries();
-      Future.delayed(const Duration(seconds: 3));
+      Future.delayed(const Duration(seconds: 1));
       emit(GetPopularTvSeriesState(popularTvSeriesList));
     } catch (e) {
-      print(e);
+      _ShowDebug.showError(e.toString());
     }
     return null;
   }
@@ -147,25 +149,25 @@ class MovieCubit extends Cubit<MovieState> {
       emit(MovieLoading());
       List<TvSeriesResult>? trendingTvSeriesList =
           await JsonServices().fetchTrendingTvSeries();
-      Future.delayed(const Duration(seconds: 3));
+      Future.delayed(const Duration(seconds: 1));
       emit(GetTrendingTvSeriesState(trendingTvSeriesList));
     } catch (e) {
-      print(e);
+      _ShowDebug.showError(e.toString());
     }
     return null;
   }
 
-  Future<List<Results>?> StartallTvSeriesService() async {
+  Future<List<Results>?> startallTvSeriesService() async {
     try {
       emit(MovieLoading());
       List<TvSeriesResult>? trendingTvSeriesList =
           await JsonServices().fetchTrendingTvSeries();
       List<TvSeriesResult>? popularTvSeries =
           await JsonServices().fetchPopularTvSeries();
-      Future.delayed(const Duration(seconds: 3));
+      Future.delayed(const Duration(seconds: 1));
       emit(StartAllTvSeriesServiceState(popularTvSeries, trendingTvSeriesList));
     } catch (e) {
-      print(e);
+      _ShowDebug.showError(e.toString());
     }
     return null;
   }
@@ -177,11 +179,19 @@ class MovieCubit extends Cubit<MovieState> {
           await JsonServices().fetchTvSeriesDetails(id);
       List<TvSeriesActorModel>? actorList =
           await JsonServices().fetchTvSeriesActorDetails(id);
-      Future.delayed(const Duration(seconds: 3));
-      emit(GetTvSeriesDataState(popularMoviesModelList,actorList));
+      Future.delayed(const Duration(seconds: 1));
+      emit(GetTvSeriesDataState(popularMoviesModelList, actorList));
     } catch (e) {
-      print(e);
+      _ShowDebug.showError(e.toString());
     }
     return null;
+  }
+}
+
+class _ShowDebug {
+  static void showError(String error) {
+    if (kDebugMode) {
+      print(error);
+    }
   }
 }
