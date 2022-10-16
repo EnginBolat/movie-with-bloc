@@ -10,11 +10,7 @@ class AppTheme {
       iconTheme: IconThemeData(
         color: Colors.white,
       ),
-      systemOverlayStyle: SystemUiOverlayStyle(
-        statusBarColor: Colors.transparent,
-        statusBarIconBrightness: Brightness.light,
-      ),
-      centerTitle: true,
+      centerTitle: true, systemOverlayStyle: SystemUiOverlayStyle.light,
     ),
   );
 }
