@@ -8,7 +8,7 @@ class ProfilePage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(),
       body: const Center(
-        child: Text("TvSeries Home Page"),
+        child: Text("Profile Page"),
       ),
     );
   }
